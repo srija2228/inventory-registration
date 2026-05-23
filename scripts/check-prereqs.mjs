@@ -6,13 +6,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const BASE_URL = process.env.BASE_URL ?? "http://localhost:3000";
+const BASE_URL = process.env.API_URL ?? process.env.BASE_URL ?? "http://localhost:3000";
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-const envPath = path.join(root, ".env");
+const envPath = path.join(root, "backend", ".env");
 
 if (!fs.existsSync(envPath)) {
-  console.error("\n✗ Missing .env file.");
-  console.error("  cp .env.example .env");
+  console.error("\n✗ Missing backend/.env file.");
+  console.error("  copy backend\\.env.example backend\\.env");
   console.error("  Fill DATABASE_URL, DIRECT_URL, UPSTASH_REDIS_*, CRON_SECRET\n");
   process.exit(1);
 }

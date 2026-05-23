@@ -6,7 +6,7 @@
  *   BASE_URL=http://localhost:3000 node scripts/api-smoke-test.mjs
  */
 
-const BASE_URL = process.env.BASE_URL ?? "http://localhost:3000";
+const BASE_URL = process.env.API_URL ?? process.env.BASE_URL ?? "http://localhost:3000";
 const WAREHOUSE_MUMBAI = "seed-wh-mumbai";
 
 let passed = 0;
