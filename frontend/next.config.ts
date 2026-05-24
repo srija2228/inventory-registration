@@ -3,8 +3,12 @@ import type { NextConfig } from "next";
 const apiProxy = process.env.API_PROXY_URL ?? "http://localhost:3001";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   eslint: { ignoreDuringBuilds: true },
   serverExternalPackages: ["@prisma/client", "bcryptjs"],
+  experimental: {
+    serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
+  },
   images: {
     remotePatterns: [
       {

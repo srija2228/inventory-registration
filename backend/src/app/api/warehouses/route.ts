@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { handleError, ok } from "@/lib/api-response";
 import { redis } from "@/lib/redis";
 import * as inventoryService from "@/services/inventory.service";

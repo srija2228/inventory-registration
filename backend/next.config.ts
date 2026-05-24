@@ -3,7 +3,12 @@ import type { NextConfig } from "next";
 const frontendOrigin = process.env.FRONTEND_URL ?? "http://localhost:3000";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   eslint: { ignoreDuringBuilds: true },
+  serverExternalPackages: ["@prisma/client", "bcryptjs"],
+  experimental: {
+    serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
+  },
   async headers() {
     return [
       {
