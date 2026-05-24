@@ -13,25 +13,34 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        try {
+          console.log("Auth attempt for:", credentials?.email);
+
+          if (!credentials?.email || !credentials?.password) {
+            return null;
+          }
+
+          const user = await db.user.findUnique({
+            where: { email: credentials.email.toLowerCase().trim() },
+          });
+
+          console.log("User found:", !!user);
+          if (!user) return null;
+
+          const valid = await bcrypt.compare(credentials.password, user.password);
+          console.log("Password valid:", valid);
+          if (!valid) return null;
+
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
           return null;
         }
-
-        const user = await db.user.findUnique({
-          where: { email: credentials.email.toLowerCase().trim() },
-        });
-
-        if (!user) return null;
-
-        const valid = await bcrypt.compare(credentials.password, user.password);
-        if (!valid) return null;
-
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        };
       },
     }),
   ],
